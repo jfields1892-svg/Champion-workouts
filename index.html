@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champion Training: Legendary Workouts</title>
+    <style>
+        :root { --accent: #ffcc00; --bg: #0d0d0d; --card: #1a1a1a; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 20px; }
+        .header { text-align: center; border-bottom: 3px solid var(--accent); padding-bottom: 20px; margin-bottom: 30px; }
+        .selector-area { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+        select { background: #333; color: white; border: 1px solid var(--accent); padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .workout-card { background: var(--card); border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-left: 5px solid var(--accent); max-width: 800px; margin: auto; }
+        .exercise-item { background: #222; margin: 10px 0; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sets-reps { color: var(--accent); font-weight: 800; }
+        .cardio-box { margin-top: 30px; background: rgba(255, 204, 0, 0.1); border: 2px dashed var(--accent); padding: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>CHAMPION TRAINING</h1><p>Expert Muscle Building & Conditioning</p></div>
+    <div class="selector-area">
+        <select id="champ" onchange="render()"><option value="bruce">Bruce Lee</option><option value="mark">Mark Henry</option><option value="brock">Brock Lesnar</option><option value="cena">John Cena</option></select>
+        <select id="part" onchange="render()"><option value="back">Back</option><option value="arms">Arms</option><option value="legs">Legs</option></select>
+    </div>
+    <div id="app"></div>
+    <script>
+        const db = {
+            bruce: { name: "Bruce Lee", cardio: "3 Miles Run + 30m Jump Rope", back: [{n:"Weighted Pullups", d:"3x10"}, {n:"Dragon Flags", d:"3x8"}], arms: [{n:"Wrist Curls", d:"4x20"}, {n:"Isometric Hold", d:"3x30s"}], legs: [{n:"Side Kicks", d:"50/leg"}, {n:"Squat Jumps", d:"4x20"}] },
+            mark: { name: "Mark Henry", cardio: "10m Sled Drags + Farmer Walks", back: [{n:"Deadlift", d:"5x3 (Heavy)"}, {n:"Barbell Rows", d:"4x6"}], arms: [{n:"Cheat Curls", d:"3x6"}, {n:"Close Bench", d:"5x5"}], legs: [{n:"Back Squat", d:"5x3 (90%)"}, {n:"Leg Press", d:"3x10"}] },
+            brock: { name: "Brock Lesnar", cardio: "Battle Ropes + 400m Sprints", back: [{n:"Weighted Pullups", d:"4x10"}, {n:"T-Bar Rows", d:"4x8"}], arms: [{n:"Hammer Curls", d:"4x12"}, {n:"Dips", d:"3x15"}], legs: [{n:"Zercher Squats", d:"3x10"}, {n:"Tire Flips", d:"5m"}] },
+            cena: { name: "John Cena", cardio: "15m Treadmill (Incline)", back: [{n:"Lat Pulldowns", d:"4x12"}, {n:"Deadlift", d:"3x10"}], arms: [{n:"Preacher Curls", d:"3x12"}, {n:"Skull Crushers", d:"3x12"}], legs: [{n:"Leg Extension", d:"4x15"}, {n:"Squats", d:"4x10"}] }
+        };
+        function render() {
+            const c = db[document.getElementById('champ').value], p = document.getElementById('part').value;
+            let h = `<div class="workout-card"><h2>${c.name} - ${p.toUpperCase()}</h2>`;
+            c[p].forEach(e => h += `<div class="exercise-item"><span>${e.n}</span><span class="sets-reps">${e.d}</span></div>`);
+            h += `<div class="cardio-box"><strong>Cardio:</strong> ${c.cardio}</div></div>`;
+            document.getElementById('app').innerHTML = h;
+        }
+        render();
+    </script>
+</body>
+</html>
